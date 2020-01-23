@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title> Titanic Dataset </title>
+  </head>
+  <body>
+    <script>
+      fetch('passengers.json')
+      .then(res => res.json())
+      .then(json => {
+        handleData(json)
+      })
+
+      function handleData(data) {
+        const betterData = data.map(passengers => passengers.fields)
+        firstPassenger(betterData)
+        totalCount(betterData)
+        survivors(betterData)
+        deadHomies(betterData)
+        classes(betterData)
+        classCount(betterData)
+        classDeaths(betterData)
+        ages(betterData)
+      }
+
+      function firstPassenger(betterData) {
+        console.log(`The first passenger is ${betterData[0].name}. He paid £${betterData[0].fare} for his ${betterData[0].pclass}rd class ticket. Did he live? ${betterData[0].survived} and his age is ${betterData[0].age}`)
+      }
+
+      function totalCount(betterData) {
+        console.log(`There were ${betterData.length} passengers.`)
+      }
+
+      function survivors(betterData) {
+        count = 0 
+        for(i = 0; i < betterData.length; i++) {
+          if (betterData[i].survived == 'Yes') {
+            count += 1
+          }
+        }
+        console.log(`${count} people survived`)
+      }
+      function deadHomies(betterData) {
+        count = 0 
+        for(i = 0; i < betterData.length; i++) {
+          if (betterData[i].survived == 'No') {
+            count += 1
+          }
+        }
+        console.log(`${count} dead homies. RIP!`)
+      }
+
+      function classes(betterData) {
+        const pclasses = new Set()
+        betterData.forEach((passengers) => {
+          pclasses.add(passengers.pclass)
+        })
+        console.log(`There were ${pclasses.size} classes.`)
+      }
+
+      function classCount(betterData) {
+        count = {first: 0, second: 0, third: 0}
+        betterData.forEach((passenger) => {
+          if (passenger.pclass == 1) {
+            count.first++
+          } else if (passenger.pclass == 2) {
+            count.second++
+          } else if (passenger.pclass ==3 ) {
+            count.third++
+          }
+        })
+        console.log(`There were ${count.first} passengers in first class, ${count.second} passengers in second class & ${count.third} passengers in third class`)
+      }
+
+      function classDeaths(betterData) {
+        count = {first: 0, second: 0, third: 0}
+        betterData.forEach((passengers) => {
+          if (passengers.pclass == 1 && passengers.survived == 'No') {
+            count.first++
+          } else if (passengers.pclass == 2 && passengers.survived == 'No') {
+            count.second++
+          } else if (passengers.pclass == 3 && passengers.survived == 'No') {
+            count.third++
+          }
+        })
+        console.log(`${count.first} passengers in first class died. ${count.second} passengers in second class died. ${count.third} passengers in third class died`)
+      }
+
+      function ages(betterData) {
+        const pAges = new Set()
+    
+        betterData.forEach((passengers) => {
+          pAges.add(passengers.age)
+        })
+        console.log(pAges)
+      }
+
+
+    </script>
+  </body>
+</html>
