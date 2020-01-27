@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>Titanic Dataset | Viz 2</title>
+  </head>
+  <body>
+    <h1>Visualization 2</h1>
+
+    <h3> Embarked </h3>
+    <div id="totalPassengers"></div>
+
+    <h3> Classes </h3>
+    <div id="pClass"></div>
+
+    <!-- total passengers & where they embarked -->
+    <!-- male vs female -->
+    <!-- dead vs alive -->
+    <!-- what class they were in -->
+    
+    <script>
+
+      const totalPassengers = document.getElementById('totalPassengers')
+      const pClass = document.getElementById('pClass')
+
+      fetch('passengers.json')
+      .then(res => res.json())
+      .then(json => {
+        handleData(json)
+      })
+
+      function handleData(data) {
+        const betterData = data.map(passengers => passengers.fields)
+        // EMBARKED
+        betterData.forEach(passenger => {
+          //make an element
+          const el = document.createElement('div')
+          //attach the element to the dom 
+          totalPassengers.appendChild(el)
+          //styling element 
+          el.style.width = '10px'
+          el.style.height = '10px'
+          el.style.margin = '1px'
+          
+          if (passenger.embarked === 'S') {
+            el.style.backgroundColor = 'silver'
+          } else if (passenger.embarked === 'Q') {
+            el.style.backgroundColor = 'blue'
+          } else if (passenger.embarked === 'C') {
+            el.style.backgroundColor = 'gold'
+          } else {
+            el.style.backgroundColor = 'yellow'
+          }
+        })
+
+        //CLASS
+        betterData.forEach(passenger => {
+          //make an element 
+          const el = document.createElement('div')
+          //attach the element to the dom 
+          pClass.appendChild(el)
+          //style element 
+          el.style.width = '10px'
+          el.style.height = '10px'
+          el.style.margin = '1px'
+
+          if(passenger.pclass === 1) {
+            el.style.backgroundColor = 'purple'
+          } else if (passenger.pclass === 2) {
+            el.style.backgroundColor = 'silver' 
+          } else if (passenger.pclass === 3) {
+            el.style.backgroundColor = 'yellow'
+          } else {
+            el.style.backgroundColor = 'white'
+          }
+        })
+
+        //STYLE 
+        totalPassengers.style.display = 'flex'
+        totalPassengers.style.flexWrap = 'wrap'
+        pClass.style.display = 'flex'
+        pClass.style.flexWrap = 'wrap'
+      }
+
+      function 
+    </script>
+  </body>
+</html>
