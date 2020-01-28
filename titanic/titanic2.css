@@ -1,0 +1,65 @@
+body {
+  margin: 25px;
+}
+
+.sh-square {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  background-color: red;
+}
+
+.cb-square {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  background-color: silver;
+}
+
+.qs-square {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  background-color: blue;
+}
+.undefined-square {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  background-color: black;
+}
+
+.fClass {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  background-color: gold;
+}
+
+.sClass {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  background-color: silver;
+}
+
+.tClass {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  background-color: #B87333;
+}
+
+.male {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  background-color: blue;
+}
+
+.female {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  background-color: pink;
+}

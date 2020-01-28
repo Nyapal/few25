@@ -1,25 +1,46 @@
 <html>
   <head>
     <title>Titanic Dataset | Viz 2</title>
+    <link rel="stylesheet" href="titanic2.css">
   </head>
   <body>
-    <h1>Visualization 2</h1>
+    <h1 style="text-align:center">Visualization 2</h1>
 
     <h3> Embarked </h3>
+    <p> 
+      Southhampton <span class="sh-square"></span>,
+      Cherbourg <span class="cb-square"></span>,
+      Queenstown  <span class="qs-square"></span>,
+      Unknown  <span class="undefined-square"></span>
+    </p>
     <div id="totalPassengers"></div>
 
     <h3> Classes </h3>
+    <p>
+      First <span class="fClass"></span>,
+      Second <span class="sClass"></span>,
+      Third <span class="tClass"></span>
+    </p>
     <div id="pClass"></div>
 
-    <!-- total passengers & where they embarked -->
+    <h3> Gender </h3>
+    <p>
+      Male <span class="male"></span>,
+      Female <span class="female"></span>
+    </p>
+    <div id="gender"></div>
     <!-- male vs female -->
+
+    <h3> Survivors </h3>
+    <div id="survivors"></div>
     <!-- dead vs alive -->
-    <!-- what class they were in -->
     
     <script>
 
       const totalPassengers = document.getElementById('totalPassengers')
       const pClass = document.getElementById('pClass')
+      const gender = document.getElementById('gender')
+      const survivorsGraph = document.getElementById('survivors')
 
       fetch('passengers.json')
       .then(res => res.json())
@@ -29,6 +50,23 @@
 
       function handleData(data) {
         const betterData = data.map(passengers => passengers.fields)
+        embarked(betterData)
+        passClass(betterData)
+        genderGraph(betterData)
+        survivors(betterData)
+
+        //STYLE 
+        totalPassengers.style.display = 'flex'
+        totalPassengers.style.flexWrap = 'wrap'
+        pClass.style.display = 'flex'
+        pClass.style.flexWrap = 'wrap'
+        gender.style.display = 'flex'
+        gender.style.flexWrap = 'wrap'
+        survivorsGraph.style.display = 'flex'
+        survivorsGraph.style.flexWrap = 'wrap'
+      }
+
+      function embarked(betterData) {
         // EMBARKED
         betterData.forEach(passenger => {
           //make an element
@@ -41,16 +79,18 @@
           el.style.margin = '1px'
           
           if (passenger.embarked === 'S') {
-            el.style.backgroundColor = 'silver'
+            el.style.backgroundColor = 'red'
           } else if (passenger.embarked === 'Q') {
             el.style.backgroundColor = 'blue'
           } else if (passenger.embarked === 'C') {
-            el.style.backgroundColor = 'gold'
+            el.style.backgroundColor = 'silver'
           } else {
-            el.style.backgroundColor = 'yellow'
+            el.style.backgroundColor = 'black'
           }
         })
+      }
 
+      function passClass(betterData) {
         //CLASS
         betterData.forEach(passenger => {
           //make an element 
@@ -63,24 +103,47 @@
           el.style.margin = '1px'
 
           if(passenger.pclass === 1) {
-            el.style.backgroundColor = 'purple'
+            el.style.backgroundColor = 'gold'
           } else if (passenger.pclass === 2) {
             el.style.backgroundColor = 'silver' 
           } else if (passenger.pclass === 3) {
-            el.style.backgroundColor = 'yellow'
+            el.style.backgroundColor = '#B87333'
           } else {
-            el.style.backgroundColor = 'white'
+            el.style.backgroundColor = 'black'
           }
         })
-
-        //STYLE 
-        totalPassengers.style.display = 'flex'
-        totalPassengers.style.flexWrap = 'wrap'
-        pClass.style.display = 'flex'
-        pClass.style.flexWrap = 'wrap'
       }
 
-      function 
+      function genderGraph (betterData) {
+        betterData.forEach(passenger => {
+          //make an element
+          const el = document.createElement('div')
+          //attach the element to the dom 
+          gender.appendChild(el)
+          //styling element 
+          el.style.width = '10px'
+          el.style.height = '10px'
+          el.style.margin = '1px'
+          
+          el.style.backgroundColor = passenger.sex === 'male' ? 'blue' : 'pink'
+        }) 
+      }
+
+      function survivors (betterData) {
+        betterData.forEach(passenger => {
+          //make an element
+          const el = document.createElement('div')
+          //attach the element to the dom 
+          survivorsGraph.appendChild(el)
+          //styling element 
+          el.style.width = '10px'
+          el.style.height = '10px'
+          el.style.margin = '1px'
+          
+          el.style.backgroundColor = passenger.survived === 'No' ? 'red' : 'blue'
+        }) 
+
+      }
     </script>
   </body>
 </html>
