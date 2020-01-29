@@ -34,6 +34,12 @@
     <h3> Survivors </h3>
     <div id="survivors"></div>
     <!-- dead vs alive -->
+
+    <hr style="margin-top: 25px; border: 2px solid black;">
+    
+    <h2> Challenges </h2>
+
+    <p> Sort based on gender, survived, embarked, & both sex & survived </p>
     
     <script>
 
@@ -55,6 +61,8 @@
         genderGraph(betterData)
         survivors(betterData)
 
+        console.log(betterData)
+
         //STYLE 
         totalPassengers.style.display = 'flex'
         totalPassengers.style.flexWrap = 'wrap'
@@ -67,6 +75,8 @@
       }
 
       function embarked(betterData) {
+        betterData.sort((a, b) => a.embarked === 'C' ? -1 : 1)
+        betterData.sort((a, b) => a.embarked === 'S' ? -1 : 1)
         // EMBARKED
         betterData.forEach(passenger => {
           //make an element
@@ -88,9 +98,13 @@
             el.style.backgroundColor = 'black'
           }
         })
+
+
       }
 
       function passClass(betterData) {
+        betterData.sort((a, b) => a.pclass === 2 ? -1 : 1)
+        betterData.sort((a, b) => a.pclass === 1 ? -1 : 1)
         //CLASS
         betterData.forEach(passenger => {
           //make an element 
@@ -115,6 +129,17 @@
       }
 
       function genderGraph (betterData) {
+        betterData.sort((a, b) => {
+          if (a.sex === 'male') {
+            return -1
+          } else {
+            return 1
+          }
+          // return a.sex === 'male' ? -1 : 1
+        })
+
+        console.log(betterData.map(p => p.sex))
+
         betterData.forEach(passenger => {
           //make an element
           const el = document.createElement('div')
@@ -130,6 +155,7 @@
       }
 
       function survivors (betterData) {
+        betterData.sort((a, b) => a.survived === 'Yes' ? -1: 1)
         betterData.forEach(passenger => {
           //make an element
           const el = document.createElement('div')
