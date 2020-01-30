@@ -1,175 +1,89 @@
 <html>
   <head>
-    <title>Titanic Dataset | Viz 2</title>
+    <title> Titanic Dataset | Viz 2 </title>
     <link rel="stylesheet" href="titanic2.css">
   </head>
   <body>
-    <h1 style="text-align:center">Visualization 2</h1>
-
+    <h1> Titanic Dataset | Visualization 2 </h1>
+    
+    <!-- General Visualizations -->
     <h3> Embarked </h3>
     <p> 
-      Southhampton <span class="sh-square"></span>,
-      Cherbourg <span class="cb-square"></span>,
-      Queenstown  <span class="qs-square"></span>,
-      Unknown  <span class="undefined-square"></span>
+      Southhampton <span class="legend" id="shStation"></span>,
+      Cherbourg <span class="legend" id="cbStation"></span>,
+      Queenstown  <span class="legend" id="qsStation"></span>,
+      Unknown  <span class="legend" id="undefinedStation"></span>
     </p>
-    <div id="totalPassengers"></div>
+    <div id="pEmbarked"></div>
 
     <h3> Classes </h3>
     <p>
-      First <span class="fClass"></span>,
-      Second <span class="sClass"></span>,
-      Third <span class="tClass"></span>
+      First <span class="legend" id="fClass"></span>,
+      Second <span class="legend" id="sClass"></span>,
+      Third <span class="legend" id="tClass"></span>
     </p>
     <div id="pClass"></div>
 
     <h3> Gender </h3>
     <p>
-      Male <span class="male"></span>,
-      Female <span class="female"></span>
+      Male <span class="legend" id="male"></span>,
+      Female <span class="legend" id="female"></span>
     </p>
-    <div id="gender"></div>
-    <!-- male vs female -->
+    <div id="pGender"></div>
 
     <h3> Survivors </h3>
-    <div id="survivors"></div>
-    <!-- dead vs alive -->
+    <p>
+      Survivors <span class="legend" id="survivors"></span>,
+      Diers <span class="legend" id="diers"></span>
+    </p>
+    <div id="pSurvivors"></div>
+
+    <hr>
+
+    <!-- Sorted Visualizations -->
+    <h2> Sorted Visualizations </h2>
+
+    <h3> Gender </h3>
+    <div id="genderSorted"></div>
+
+    <h3> Survived </h3>
+    <div id="survivedSorted"></div>
+
+    <h3> Embarked </h3>
+    <div id="embarkedSorted"></div>
+
+    <h3> Class </h3>
+    <div id="classSorted"></div>
+
+    <h3> Gender & Survived </h3>
+
+    <p> Sort based on both sex & survived </p>
 
     <hr style="margin-top: 25px; border: 2px solid black;">
+
+    <h2> Filtered Visualizations </h2>
+    <p> Display only women, pclass 1, 2, 3 & only passengers that embarked on undefined </p>
+
+    <h3> Men </h3>
+    <div id="menFiltered"></div>
+
+    <h3> Women </h3>
+    <div id="menOnly"></div>
+
+    <h3> First Class </h3>
+    <div id="menOnly"></div>
+
+    <h3> Second Class </h3>
+    <div id="menOnly"></div>
+
+    <h3> Third Class </h3>
+    <div id="menOnly"></div>
+
+    <h3> Embarked Undefined </h3>
+    <div id="undefinedFiltered"> </div>
+
+
     
-    <h2> Challenges </h2>
-
-    <p> Sort based on gender, survived, embarked, & both sex & survived </p>
-    
-    <script>
-
-      const totalPassengers = document.getElementById('totalPassengers')
-      const pClass = document.getElementById('pClass')
-      const gender = document.getElementById('gender')
-      const survivorsGraph = document.getElementById('survivors')
-
-      fetch('passengers.json')
-      .then(res => res.json())
-      .then(json => {
-        handleData(json)
-      })
-
-      function handleData(data) {
-        const betterData = data.map(passengers => passengers.fields)
-        embarked(betterData)
-        passClass(betterData)
-        genderGraph(betterData)
-        survivors(betterData)
-
-        console.log(betterData)
-
-        //STYLE 
-        totalPassengers.style.display = 'flex'
-        totalPassengers.style.flexWrap = 'wrap'
-        pClass.style.display = 'flex'
-        pClass.style.flexWrap = 'wrap'
-        gender.style.display = 'flex'
-        gender.style.flexWrap = 'wrap'
-        survivorsGraph.style.display = 'flex'
-        survivorsGraph.style.flexWrap = 'wrap'
-      }
-
-      function embarked(betterData) {
-        betterData.sort((a, b) => a.embarked === 'C' ? -1 : 1)
-        betterData.sort((a, b) => a.embarked === 'S' ? -1 : 1)
-        // EMBARKED
-        betterData.forEach(passenger => {
-          //make an element
-          const el = document.createElement('div')
-          //attach the element to the dom 
-          totalPassengers.appendChild(el)
-          //styling element 
-          el.style.width = '10px'
-          el.style.height = '10px'
-          el.style.margin = '1px'
-          
-          if (passenger.embarked === 'S') {
-            el.style.backgroundColor = 'red'
-          } else if (passenger.embarked === 'Q') {
-            el.style.backgroundColor = 'blue'
-          } else if (passenger.embarked === 'C') {
-            el.style.backgroundColor = 'silver'
-          } else {
-            el.style.backgroundColor = 'black'
-          }
-        })
-
-
-      }
-
-      function passClass(betterData) {
-        betterData.sort((a, b) => a.pclass === 2 ? -1 : 1)
-        betterData.sort((a, b) => a.pclass === 1 ? -1 : 1)
-        //CLASS
-        betterData.forEach(passenger => {
-          //make an element 
-          const el = document.createElement('div')
-          //attach the element to the dom 
-          pClass.appendChild(el)
-          //style element 
-          el.style.width = '10px'
-          el.style.height = '10px'
-          el.style.margin = '1px'
-
-          if(passenger.pclass === 1) {
-            el.style.backgroundColor = 'gold'
-          } else if (passenger.pclass === 2) {
-            el.style.backgroundColor = 'silver' 
-          } else if (passenger.pclass === 3) {
-            el.style.backgroundColor = '#B87333'
-          } else {
-            el.style.backgroundColor = 'black'
-          }
-        })
-      }
-
-      function genderGraph (betterData) {
-        betterData.sort((a, b) => {
-          if (a.sex === 'male') {
-            return -1
-          } else {
-            return 1
-          }
-          // return a.sex === 'male' ? -1 : 1
-        })
-
-        console.log(betterData.map(p => p.sex))
-
-        betterData.forEach(passenger => {
-          //make an element
-          const el = document.createElement('div')
-          //attach the element to the dom 
-          gender.appendChild(el)
-          //styling element 
-          el.style.width = '10px'
-          el.style.height = '10px'
-          el.style.margin = '1px'
-          
-          el.style.backgroundColor = passenger.sex === 'male' ? 'blue' : 'pink'
-        }) 
-      }
-
-      function survivors (betterData) {
-        betterData.sort((a, b) => a.survived === 'Yes' ? -1: 1)
-        betterData.forEach(passenger => {
-          //make an element
-          const el = document.createElement('div')
-          //attach the element to the dom 
-          survivorsGraph.appendChild(el)
-          //styling element 
-          el.style.width = '10px'
-          el.style.height = '10px'
-          el.style.margin = '1px'
-          
-          el.style.backgroundColor = passenger.survived === 'No' ? 'red' : 'blue'
-        }) 
-
-      }
-    </script>
+    <script src="viz2.js"></script>
   </body>
 </html>

@@ -2,64 +2,76 @@ body {
   margin: 25px;
 }
 
-.sh-square {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
-  background-color: red;
+h1 {
+  text-align: center;
 }
 
-.cb-square {
+div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+hr {
+  margin: 25px;
+  border: 2px solid black;
+}
+
+.legend {
   display: inline-block;
   height: 12px;
   width: 12px;
+}
+
+/* General Visualizations  */
+
+/* Embarked */
+
+#shStation {
+  background-color: #B22222;
+}
+
+#cbStation {
   background-color: silver;
 }
 
-.qs-square {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
-  background-color: blue;
+#qsStation {
+  background-color: #000080;
 }
-.undefined-square {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
+
+#undefinedStation {
   background-color: black;
 }
 
-.fClass {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
+/* Classes */
+
+#fClass {
   background-color: gold;
 }
 
-.sClass {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
+#sClass {
   background-color: silver;
 }
 
-.tClass {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
+#tClass {
   background-color: #B87333;
 }
 
-.male {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
-  background-color: blue;
+/* Gender */
+
+#male {
+  background-color: #000080;
 }
 
-.female {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
+#female {
   background-color: pink;
+}
+
+/* Survivors */ 
+
+#survivors {
+  background-color: #000080;
+}
+
+#diers {
+  background-color: #B22222;
 }
