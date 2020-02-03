@@ -1,6 +1,6 @@
 // General
+const pClasses = document.getElementById('pClass')
 const embarked = document.getElementById('pEmbarked')
-const classes = document.getElementById('pClass')
 const gender = document.getElementById('pGender')
 const survivors = document.getElementById('pSurvivors')
 // Sorted
@@ -41,7 +41,7 @@ function embarkedGraph(betterData) {
     //make an element
     const el = document.createElement('div')
     //attach the element to the dom 
-    pEmbarked.appendChild(el)
+    embarked.appendChild(el)
     //styling element 
     el.style.width = '10px'
     el.style.height = '10px'
@@ -65,7 +65,7 @@ function classGraph(betterData) {
     //make an element 
     const el = document.createElement('div')
     //attach the element to the dom 
-    classes.appendChild(el)
+    pClasses.appendChild(el)
     //style element 
     el.style.width = '10px'
     el.style.height = '10px'

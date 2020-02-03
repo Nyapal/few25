@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <title> Viz 3 | Interactive </title>
+    <link rel="stylesheet" href="titanic2.css">
+  </head>
+  <body>
+    <h1> Viz 3 </h1>
+
+    <h3> Gender </h3>
+    <div id="pGender"></div>
+    <button id="buttonGender"> Gender </button>
+    <script>
+
+    fetch('passengers.json')
+    .then(res => res.json())
+    .then(json => {
+      handleData(json)
+    })
+
+    function handleData(data) {
+      const betterData = data.map(passengers => passengers.fields)
+      genderGraph(betterData)
+    }
+
+    //
+    const gender = document.getElementById('pGender')
+
+    // Handle interaction
+    let showGender = false
+    // console.log(showGender)
+
+
+    function genderGraph (betterData) {
+      betterData.forEach(passenger => {
+        //make an element
+        const el = document.createElement('div')
+        //attach the element to the dom 
+        gender.appendChild(el)
+        //styling element 
+        el.style.width = '10px'
+        el.style.height = '10px'
+        el.style.margin = '1px'
+        el.style.backgroundColor = 'black'
+      }) 
+    }
+
+    buttonGender.addEventListener('click', (e) => {
+      showGender = !showGender
+      if (showGender) {
+        // true
+        e.target.style.backgroundColor = 'black'
+        e.target.style.color = 'white'
+        selectButton(e.target, showGender)
+      } else {
+        // false
+        e.target.style.backgroundColor = 'white'
+        e.target.style.color = 'black'
+        // e.target.classList.remove('button-selected')
+        selectButton(e.target, showGender)
+      }
+    })
+
+    function selectButton(el, state) {
+      if (state == true) {
+        if (el.sex === 'male') {
+          el.style.backgroundColor = '#000080'
+        } else {
+          el.style.backgroundColor = 'pink'
+        }
+      } 
+    }
+    
+    </script>
+  </body>
+</html>
