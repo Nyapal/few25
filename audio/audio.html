@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title> Audio </title>
+  </head>
+  <body style="text-align: center;">
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <button id="button-play" style="margin-left: auto;">Play</button>
+
+    <script>
+      let analyzer
+      let frequencyArray
+
+      const canvas = document.getElementById('canvas')
+      const ctx = canvas.getContext('2d')
+
+      const centerX = 300 / 2
+      const centerY = 300 / 2
+      const radius = 300 / 5
+
+      function startAudio() {
+        const audio = new Audio()
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+        audio.src = 'No_Stress_Freestyle.m4a'
+
+        analyser = audioContext.createAnalyser()
+        const source = audioContext.createMediaElementSource(audio)
+        source.connect(analyser)
+        analyser.connect(audioContext.destination)
+        frequencyArray = new Uint8Array(analyser.frequencyBinCount)
+        
+        audio.play()
+        render()
+      }
+      const playButton = document.getElementById('button-play')
+
+      playButton.addEventListener('click', (e) => {
+        startAudio()
+      })
+
+      function chooseRGB() {
+        const r = Math.floor(Math.random() * 255)
+        const g = Math.floor(Math.random() * 255)
+        const b = Math.floor(Math.random() * 255)
+
+        return `rgb(${r},${g},${b})`
+      }
+
+      function randomHSL(s, l) {
+        const h = Math.floor(Math.random() * 360)
+        // const s = s
+        // const l = s
+
+        return `hsl(${h}, ${s}%, ${l}%)`
+      }
+
+      function render() {
+        ctx.clearRect(0, 0, 300, 300)
+
+        ctx.beginPath()
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI)
+        ctx.strokeStyle = 'gold'
+        ctx.stroke()
+
+        const bars = 180
+        const step = Math.PI * 2 / bars
+
+        analyser.getByteFrequencyData(frequencyArray)
+
+        frequencyArray.forEach((f, i) => {
+          const barLength = frequencyArray[i] * 0.5
+          const x1 = (Math.cos(step * i) * radius) + centerX
+          const y1 = (Math.sin(step * i) * radius) + centerY
+          const x2 = (Math.cos(step * i) * (radius + barLength)) + centerX
+          const y2 = (Math.sin(step * i) * (radius + barLength)) + centerY
+
+          ctx.beginPath()
+
+          ctx.strokeStyle = randomHSL(75, 45)
+
+          ctx.moveTo(x1, y1)
+          ctx.lineTo(x2, y2)
+
+          ctx.stroke()
+        })
+
+        
+
+        requestAnimationFrame(render)
+      }
+    
+    </script>
+  </body>
+</html>
