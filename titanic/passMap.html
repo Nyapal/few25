@@ -1,0 +1,40 @@
+<html>
+  <head></head>
+  <body>
+    <h1> Titanic Viz 4 </h1>
+    <p> This visualization shows each individual passenger's data</p>
+    <div id="main" style="display: flex;
+    flex-wrap: wrap;"></div>
+    <script>
+    fetch('passengers.json')
+    .then(res => res.json())
+    .then(json => {
+      handleData(json)
+    })
+
+    const main = document.getElementById('main')
+    const elements = []
+    const passengerData = []
+
+    function handleData(data) {
+      const fields = data.map(({fields}) => fields)
+
+      fields.forEach((passenger, i) => {
+          const el = document.createElement('div')
+          main.appendChild(el)
+          //styling element 
+          el.style.width = '15px'
+          el.style.height = '15px'
+          el.style.margin = '2px'
+          el.style.backgroundColor = 'black'
+          // el.style.transition = '3s'
+          elements.push(el)             // store the element
+          passengerData.push(passenger) // Store the passenger
+        });
+
+    }
+
+    
+    </script>
+  </body>
+</html>
