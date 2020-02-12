@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <title> Nyapal's Audio Visualization </title>
+  </head>
+  <body style="text-align: center;">
+    <h1> Nyapal's Audio Visualization </h1>
+    <canvas id="canvas" width="600" height="300" style="border: 2px solid black; background-color: black;" ></canvas>
+    <div style="margin: 5px">
+      <button id="btn-play"> Play </button>
+    </div>
+    <script>
+      let analyser
+      let frequencyArray
+
+      function startAudio() {
+        console.log('audio working')
+        const audio = new Audio()
+        const audioContext = new(window.AudioContext || window.webkitAudioContext)()
+
+        analyser = audioContext.createAnalyser()
+        const source = audioContext.createMediaElementSource(audio)
+        source.connect(analyser)
+        analyser.connect(audioContext.destination)
+        frequencyArray = new Uint8Array(analyser.frequencyBinCount)
+
+        audio.src = `No_Stress_Freestyle.m4a`
+        audio.play()
+        render()
+      }
+
+      const playBtn = document.getElementById('btn-play')
+
+      playBtn.addEventListener('click', (e) => {
+        startAudio()
+      }) 
+
+      const canvas = document.getElementById('canvas')
+      const ctx = canvas.getContext('2d')
+
+      function render() {
+        console.log('render working')
+        const height = 600
+        const width = 300
+
+        ctx.clearRect(0, 0, height, width)
+
+        analyser.getByteFrequencyData(frequencyArray)
+
+        frequencyArray.forEach((f, i) => {
+          const y = 300/2
+          const height = f / 255 * 300 
+          const spaceBtwn = 600 / frequencyArray.length
+          const x = spaceBtwn * i
+       
+          ctx.beginPath()
+          ctx.fillStyle = 'white'
+          ctx.fillRect(x, y - height / 2, spaceBtwn, height)
+          ctx.moveTo(x, y)
+          ctx.lineTo(x, y)
+          // ctx.strokeStyle = `gold`
+          ctx.stroke()
+        })
+
+        requestAnimationFrame(render)
+
+
+        // const bars = 180
+      }
+    
+    </script>
+  </body>
+</html>
