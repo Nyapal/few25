@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title> D3 Project </title>
+  </head>
+  <body style="text-align: center;">
+    <svg id="svg" width="500" height="500">
+      <!-- <circle cx="250" cy="250" r="123" fill="pink" />  -->
+    </svg>
+
+    <!-- Java Script -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+      // d3.json('passengers.json')
+      //   .then(json => {
+      //   handleData(json)
+      // })
+
+      // function handleData(data) {
+      //   const betterData = data.map(passengers => passengers.fields)
+      //   console.log(betterData)
+      // }
+
+      function makeRandomData(n) {
+        const arr = []
+        for(let i = 0; i < n; i++) {
+          arr.push({
+            a: Math.random(),
+            b: Math.random(),
+            c: Math.random()
+          })
+        }
+        return arr
+      }
+
+      const dateAh = makeRandomData(10)
+
+      d3.select('#svg')
+        .style('border', '2px solid black')
+        .selectAll('circle')
+        .data(dateAh)
+        .enter()
+        .append('circle')
+        .attr('cx', (d, i) => i * 500 / dateAh.length)
+        .attr('cy', (d) => d.a * 500)
+        .attr('r', (d) => d.c * 100)
+        .attr('fill', (d) => 'pink')
+        .attr('opacity', () => 0.5 )
+        
+      // d3.select('body')
+      //   .selectAll('div')
+      //   .data([5, 6, 2, 8, 4, 9, 1, 3, 9])
+      //   .enter()
+      //   .append('div')
+      //   .text((d) => d)
+      //   .style('padding', '1em')
+      //   .style('background-color', 'pink')
+      //   .style('margin', '1px')
+      //   .style('width', (d) => `${d / 10 * 100}%`)
+      
+    </script>
+  </body>
+</html>
